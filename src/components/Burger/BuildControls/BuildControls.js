@@ -22,7 +22,13 @@ const buildControls = (props) => (
         key={ctrl.label} 
         label={ctrl.label} 
       />
-    ))}    
+    ))}
+     <button 
+      className="OrderButton"
+      disabled={!props.purchasable}
+      >
+        Order now
+      </button>    
   </div>
 
 )
