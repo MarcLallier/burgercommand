@@ -1,11 +1,11 @@
 import React, {Component} from 'react'
 
-import Aux from '../../hoc/Aux'
+import Aux from '../../hoc/Aux/Aux'
 import Burger from '../../components/Burger/Burger'
 import BuildControls from '../../components/Burger/BuildControls/BuildControls'
 import Modal from '../../components/UI/Modal/Modal'
 import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary'
-
+import axios from '../../axios-orders'
 
 const INGREDIENT_PRICES = {
   salad : 0.5,
@@ -82,7 +82,24 @@ class BurgerBuilder extends Component {
   }
 
   purchaseContinueHandler = () => {
-   alert("You continue !")
+   //alert("You continue !")
+   const order = {
+     ingredients : this.state.ingredients,
+     price : this.state.totalPrice, //le prix devrait etre calculé du coté serveur pour question securite de manipulation de code avant envoi vers back
+     customer : {
+       name : 'MARC',
+       adress : {
+       street : '2 rue du chateau',
+       zipCode : '57000',
+       country : 'France'
+       },
+       email : 'marc@yahoo.fr'
+     },
+     deliverMethod : 'fastest'
+   }
+   axios.post('/orders.json', order) //les endpoints firebase sont le nom du noeud(ici "orders") et .json
+   .then(res => console.log(res))
+   .catch(err => console.log(err))
   }
 
   render() {
